@@ -1,6 +1,9 @@
 import { render } from "@testing-library/react";
 import { TextList } from "./TextList";
-import { fullResponse } from "../../testHelpers/mockTextResponses";
+import {
+  emptyResponse,
+  fullResponse,
+} from "../../testHelpers/mockTextResponses";
 
 test("renders text passed in", () => {
   const { getByText } = render(<TextList texts={fullResponse} />);
@@ -22,4 +25,11 @@ test("renders text in order", () => {
     expect(text).toHaveTextContent(String(textNumber));
     textNumber++;
   }
+});
+
+test("handles response with no texts", () => {
+  const { getByText } = render(<TextList texts={emptyResponse} />);
+
+  const message = getByText("No texts yet");
+  expect(message).toBeInTheDocument();
 });

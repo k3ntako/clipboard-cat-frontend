@@ -7,3 +7,8 @@
   max-width: 500px;
   padding: 1rem 1.5rem;
 }
+
+.noTexts {
+  color: #999;
+  text-align: center;
+}
