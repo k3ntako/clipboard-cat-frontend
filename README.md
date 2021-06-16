@@ -37,7 +37,7 @@ Production Website: <http://copy-cat-frontend-prod.k3ntako.com.s3-website-us-eas
 Make sure you have installed the dependencies first.
 
 ```
-$ npm run test
+$ npm test
 ```
 
 ## Deploy to Production
