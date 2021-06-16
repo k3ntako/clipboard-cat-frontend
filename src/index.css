@@ -13,6 +13,7 @@ code {
 }
 
 .page {
+  box-sizing: border-box;
   margin: auto;
   max-width: 1000px;
   padding: 1rem;
