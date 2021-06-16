@@ -15,5 +15,6 @@ code {
 .page {
   margin: auto;
   max-width: 1000px;
+  padding: 1rem;
   width: 100%;
 }

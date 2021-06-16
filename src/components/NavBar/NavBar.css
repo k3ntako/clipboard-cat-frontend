@@ -1,0 +1,16 @@
+nav {
+  background-color: #008d5a;
+  color: white;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+nav > a {
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+nav > a:hover {
+  color: #ccffcc;
+}

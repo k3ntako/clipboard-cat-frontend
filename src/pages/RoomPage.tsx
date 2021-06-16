@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NavBar } from "../components/NavBar";
 import { TextList } from "../components/TextList";
 import { TextEntry } from "../utilities/textRequests";
 import "./RoomPage.css";
@@ -22,9 +23,12 @@ export const RoomPage = ({ textRequests }: RoomPageProps): JSX.Element => {
   }, [textRequests]);
 
   return (
-    <div className="page roomPage">
-      <h2>Texts</h2>
-      <TextList texts={texts} />
-    </div>
+    <>
+      <NavBar />
+      <div className="page roomPage">
+        <h2>Texts</h2>
+        <TextList texts={texts} />
+      </div>
+    </>
   );
 };
