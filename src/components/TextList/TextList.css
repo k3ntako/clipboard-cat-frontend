@@ -1,0 +1,14 @@
+.textList > div {
+  border-radius: 10px;
+  border: 1px solid #999;
+  color: #555;
+  font-weight: 700;
+  margin: 0.5rem auto;
+  max-width: 500px;
+  padding: 1rem 1.5rem;
+}
+
+.noTexts {
+  color: #999;
+  text-align: center;
+}

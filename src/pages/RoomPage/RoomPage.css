@@ -1,0 +1,8 @@
+.roomPage > h2 {
+  text-align: center;
+}
+
+.roomPage > .error {
+  color: #d80000;
+  text-align: center;
+}

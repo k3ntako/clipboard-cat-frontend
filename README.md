@@ -10,9 +10,17 @@ Production Website: <http://copy-cat-frontend-prod.k3ntako.com.s3-website-us-eas
 
 - Node >= 14
 
+### Deployment Tools
+
+- [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started)
+
 ## Run locally
 
 1. Clone this repo
+
+   ```
+   $ git clone https://github.com/k3ntako/copy-cat-web.git
+   ```
 
 2. Install dependencies
    ```
@@ -22,16 +30,29 @@ Production Website: <http://copy-cat-frontend-prod.k3ntako.com.s3-website-us-eas
    ```
    $ npm start
    ```
+4. Visit `localhost:3000`
 
 ## Run test
 
 Make sure you have installed the dependencies first.
 
 ```
-$ npm run test
+$ npm test
 ```
 
 ## Deploy to Production
 
-1. npm run build
-2. terraform apply
+You will need to [install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started) to deploy.
+
+1. Assume AWS role.
+
+   - Instructions can be found in the _Assume Role_ section of the [ReadMe](https://github.com/k3ntako/copy-cat-api/blob/main/ReadMe.md) for the CopyCat API repo.
+
+2. Build the site:
+   ```
+   npm run build
+   ```
+3. Deploy to S3:
+   ```
+   terraform apply
+   ```
