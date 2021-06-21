@@ -4,9 +4,13 @@ export const apiFetcher = async (
   route: string,
   params: RequestInit = {}
 ): Promise<any> => {
+  const headers = params.headers || {};
+  delete params.headers;
+
   const res = await fetch(API_URL + route, {
     headers: {
       Accept: "*/*",
+      ...headers,
     },
     ...params,
   });

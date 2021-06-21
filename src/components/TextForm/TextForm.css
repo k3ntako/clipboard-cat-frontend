@@ -1,0 +1,22 @@
+.textForm {
+  margin: auto;
+}
+
+.textForm > form {
+  margin: auto;
+  max-width: 500px;
+  width: 100%;
+}
+
+.textForm > form > label {
+  display: none;
+}
+
+.textForm > form > textarea {
+  box-sizing: border-box;
+  display: block;
+  height: 200px;
+  margin-bottom: 1rem;
+  resize: vertical;
+  width: 100%;
+}

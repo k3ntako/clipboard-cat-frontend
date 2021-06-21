@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { NavBar } from "../../components/NavBar";
+import { TextFormContainer } from "../../components/TextForm/TextFormContainer";
 import { TextList } from "../../components/TextList";
-import { TextEntry } from "../../utilities/textRequests";
+import { TextEntry, TextRequests } from "../../utilities/textRequests";
 import "./RoomPage.css";
 
 interface RoomPageProps {
-  textRequests: {
-    getTexts: () => Promise<TextEntry[]>;
-  };
+  textRequests: TextRequests;
 }
 
 export const RoomPage = ({ textRequests }: RoomPageProps): JSX.Element => {
@@ -31,6 +30,7 @@ export const RoomPage = ({ textRequests }: RoomPageProps): JSX.Element => {
     <>
       <NavBar />
       <div className="page roomPage">
+        <TextFormContainer textRequests={textRequests} />
         <h2>Texts</h2>
         {error ? (
           <div className="error">There was an error retrieving the texts</div>

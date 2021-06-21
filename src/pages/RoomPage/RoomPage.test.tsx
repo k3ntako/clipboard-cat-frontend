@@ -1,13 +1,11 @@
 import { render } from "@testing-library/react";
 import { RoomPage } from "./RoomPage";
-import { fullResponse } from "../../testHelpers/mockTextResponses";
+import { generateMockTextRequests } from "../../testHelpers/mockTextRequests";
+import { TextEntry } from "../../utilities/textRequests";
 
 test("renders text from backend", async () => {
-  const textRequests = {
-    getTexts: jest.fn(async () => fullResponse),
-  };
-
-  const { findByText } = render(<RoomPage textRequests={textRequests} />);
+  const mockTextRequests = generateMockTextRequests();
+  const { findByText } = render(<RoomPage textRequests={mockTextRequests} />);
 
   const text = await findByText("text 1");
   expect(text).toBeInTheDocument();
@@ -15,14 +13,24 @@ test("renders text from backend", async () => {
   const lastText = await findByText("text 10");
   expect(lastText).toBeInTheDocument();
 
-  expect(textRequests.getTexts).toBeCalledTimes(1);
+  expect(mockTextRequests.getTexts).toBeCalledTimes(1);
+});
+
+test("displays text upload form", async () => {
+  const mockTextRequests = generateMockTextRequests();
+  const { findByLabelText } = render(
+    <RoomPage textRequests={mockTextRequests} />
+  );
+
+  const input = await findByLabelText("Paste text:");
+  expect(input).toBeInTheDocument();
 });
 
 test("handles error", async () => {
-  const textRequests = {
-    getTexts: async () => {
-      throw new Error("Get texts mock error");
-    },
+  const textRequests = generateMockTextRequests();
+
+  textRequests.getTexts = async (): Promise<TextEntry[]> => {
+    throw new Error("Get texts mock error");
   };
 
   const { findByText } = render(<RoomPage textRequests={textRequests} />);

@@ -19,3 +19,25 @@ code {
   padding: 1rem;
   width: 100%;
 }
+
+.rightButtonsContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.rightButtonsContainer > * {
+  margin-left: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: #3874b9;
+  border-radius: 2px;
+  border: none;
+  color: white;
+}
+
+button:hover {
+  background-color: #3874b9b6;
+}
