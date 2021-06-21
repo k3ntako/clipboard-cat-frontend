@@ -1,14 +1,19 @@
 import { render, fireEvent } from "@testing-library/react";
 import { TextForm } from "./TextForm";
 
-let mockOnSubmit: jest.Mock<any, any>;
 const setup = () => {
-  mockOnSubmit = jest.fn();
-  return render(<TextForm onSubmit={mockOnSubmit} />);
+  const mockOnSubmit: jest.Mock<any, any> = jest.fn();
+  const renderUtils = render(<TextForm onSubmit={mockOnSubmit} />);
+  return {
+    renderUtils,
+    mockOnSubmit,
+  };
 };
 
 test("should display form elements", () => {
-  const { getByRole, getByLabelText } = setup();
+  const {
+    renderUtils: { getByRole, getByLabelText },
+  } = setup();
 
   const form = getByRole("form");
   expect(form).toBeInTheDocument();
@@ -21,7 +26,9 @@ test("should display form elements", () => {
 });
 
 test("should display user input", () => {
-  const { getByLabelText } = setup();
+  const {
+    renderUtils: { getByLabelText },
+  } = setup();
 
   const input = getByLabelText("Paste text:") as HTMLInputElement;
   fireEvent.change(input, { target: { value: "this is a test string!" } });
@@ -30,7 +37,10 @@ test("should display user input", () => {
 });
 
 test("should submit user input", () => {
-  const { getByRole, getByLabelText } = setup();
+  const {
+    renderUtils: { getByRole, getByLabelText },
+    mockOnSubmit,
+  } = setup();
 
   const input = getByLabelText("Paste text:") as HTMLInputElement;
   fireEvent.change(input, { target: { value: "CAPITALIZED STRING?" } });
@@ -39,4 +49,64 @@ test("should submit user input", () => {
   fireEvent.click(submitButton);
 
   expect(mockOnSubmit.mock.calls[0][0]).toEqual("CAPITALIZED STRING?");
+});
+
+test("should disable button if there is no text", () => {
+  const {
+    renderUtils: { getByRole, getByLabelText },
+    mockOnSubmit,
+  } = setup();
+
+  const submitButton = getByRole("button", { name: "Submit" });
+  expect(submitButton).toHaveAttribute("disabled");
+
+  fireEvent.click(submitButton);
+
+  expect(mockOnSubmit).not.toHaveBeenCalled();
+});
+
+test("should disable button text is only whitespace", () => {
+  const {
+    renderUtils: { getByRole, getByLabelText },
+    mockOnSubmit,
+  } = setup();
+
+  const input = getByLabelText("Paste text:") as HTMLInputElement;
+  fireEvent.change(input, { target: { value: "  \n " } });
+
+  const submitButton = getByRole("button", { name: "Submit" });
+  expect(submitButton).toHaveAttribute("disabled");
+
+  fireEvent.click(submitButton);
+
+  expect(mockOnSubmit).not.toHaveBeenCalled();
+});
+
+test("should disable button text is over max length limit", () => {
+  const {
+    renderUtils: { getByRole, getByLabelText },
+    mockOnSubmit,
+  } = setup();
+
+  const input = getByLabelText("Paste text:") as HTMLInputElement;
+  fireEvent.change(input, { target: { value: "a".repeat(251) } });
+
+  const submitButton = getByRole("button", { name: "Submit" });
+  expect(submitButton).toHaveAttribute("disabled");
+
+  fireEvent.click(submitButton);
+
+  expect(mockOnSubmit).not.toHaveBeenCalled();
+});
+
+test("should display text length limit", () => {
+  const {
+    renderUtils: { getByLabelText, getByText },
+  } = setup();
+
+  const input = getByLabelText("Paste text:") as HTMLInputElement;
+  fireEvent.change(input, { target: { value: "a".repeat(230) } });
+
+  const lengthIndicator = getByText("230/250");
+  expect(lengthIndicator).toBeInTheDocument();
 });
