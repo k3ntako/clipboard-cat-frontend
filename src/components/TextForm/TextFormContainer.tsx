@@ -7,8 +7,8 @@ interface TextFormContainerProps {
 }
 
 export const TextFormContainer = ({ textRequests }: TextFormContainerProps) => {
-  const onSubmit = (textString: string) => {
-    textRequests.uploadText(textString);
+  const onSubmit = async (textString: string): Promise<void> => {
+    await textRequests.uploadText(textString);
   };
 
   return (

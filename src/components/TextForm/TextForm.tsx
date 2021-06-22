@@ -1,16 +1,19 @@
 import { useState } from "react";
 import "./TextForm.css";
 
-interface TextFormProps {
-  onSubmit: (textString: string) => void;
+export interface TextFormProps {
+  onSubmit: (textString: string) => Promise<void>;
 }
 
 export const TextForm = ({ onSubmit }: TextFormProps) => {
   const [textString, setTextString] = useState<string>("");
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    onSubmit(textString);
+  const handleSubmit = async (event: React.FormEvent) => {
+    try {
+      event.preventDefault();
+      await onSubmit(textString);
+      setTextString("");
+    } catch (error) {}
   };
 
   const overLengthLimit = textString.length > 250;
@@ -24,8 +27,8 @@ export const TextForm = ({ onSubmit }: TextFormProps) => {
           <textarea
             id="textString"
             onChange={(e) => setTextString(e.target.value)}
+            value={textString}
           />
-
           <div
             className={
               "textLengthIndicator" + (overLengthLimit ? " error" : "")

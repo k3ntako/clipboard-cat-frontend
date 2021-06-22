@@ -1,9 +1,9 @@
 import { render, fireEvent } from "@testing-library/react";
-import { TextForm } from "./TextForm";
+import { TextForm, TextFormProps } from "./TextForm";
 
-const setup = () => {
+const setup = (props: Partial<TextFormProps> = {}) => {
   const mockOnSubmit: jest.Mock<any, any> = jest.fn();
-  const renderUtils = render(<TextForm onSubmit={mockOnSubmit} />);
+  const renderUtils = render(<TextForm onSubmit={mockOnSubmit} {...props} />);
   return {
     renderUtils,
     mockOnSubmit,
@@ -51,9 +51,43 @@ test("should submit user input", () => {
   expect(mockOnSubmit.mock.calls[0][0]).toEqual("CAPITALIZED STRING?");
 });
 
+test("should clear input field on successful submit", () => {
+  const {
+    renderUtils: { getByRole, getByLabelText, queryByDisplayValue },
+  } = setup();
+
+  const input = getByLabelText("Paste text:") as HTMLInputElement;
+  fireEvent.change(input, { target: { value: "CAPITALIZED STRING?" } });
+
+  const submitButton = getByRole("button", { name: "Submit" });
+  fireEvent.click(submitButton);
+
+  const text = queryByDisplayValue("CAPITALIZED STRING?");
+  expect(text).not.toBeInTheDocument();
+});
+
+test("should not clear input field on submit error", () => {
+  const {
+    renderUtils: { getByRole, getByLabelText, queryByDisplayValue },
+  } = setup({
+    onSubmit: jest.fn(() => {
+      throw new Error("Test error in fetch");
+    }),
+  });
+
+  const input = getByLabelText("Paste text:") as HTMLInputElement;
+  fireEvent.change(input, { target: { value: "CAPITALIZED STRING?" } });
+
+  const submitButton = getByRole("button", { name: "Submit" });
+  fireEvent.click(submitButton);
+
+  const text = queryByDisplayValue("CAPITALIZED STRING?");
+  expect(text).toBeInTheDocument();
+});
+
 test("should disable button if there is no text", () => {
   const {
-    renderUtils: { getByRole, getByLabelText },
+    renderUtils: { getByRole },
     mockOnSubmit,
   } = setup();
 
