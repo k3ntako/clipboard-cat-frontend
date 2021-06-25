@@ -6,9 +6,9 @@ export enum ToastType {
   Success = "toastSuccess",
 }
 
-interface ToastProps {
-  message: string;
-  type: ToastType;
+export interface ToastProps {
+  message: string | null;
+  type: ToastType | null;
   timeInMs?: number;
 }
 

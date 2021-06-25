@@ -1,5 +1,6 @@
 import { render, waitFor } from "@testing-library/react";
 import { Toast, ToastType } from "./Toast";
+import "./Toast.css";
 
 beforeAll(() => {
   // Allows jest to skip forward on setTimeout
