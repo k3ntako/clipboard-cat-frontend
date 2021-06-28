@@ -28,7 +28,7 @@ export const Toast = ({ message, type, timeInMs }: ToastProps) => {
     if (nowDisplayed) {
       startTimer();
     }
-  }, [message]);
+  }, [message, startTimer]);
 
   if (!isDisplayed) {
     return null;
