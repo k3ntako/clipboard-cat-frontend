@@ -3,7 +3,7 @@ import { TextList } from "./TextList";
 import {
   emptyResponse,
   fullResponse,
-} from "../../testHelpers/mockTextResponses";
+} from "../../fixtures/mockTextResponses.fixture";
 
 test("renders text passed in", () => {
   const { getByText } = render(<TextList texts={fullResponse} />);

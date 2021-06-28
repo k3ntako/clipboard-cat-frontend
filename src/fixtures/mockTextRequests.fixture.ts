@@ -1,5 +1,5 @@
 import { TextRequests } from "../utilities/textRequests";
-import { createSingleEntry, fullResponse } from "./mockTextResponses";
+import { createSingleEntry, fullResponse } from "./mockTextResponses.fixture";
 
 export const generateMockTextRequests = (): TextRequests => {
   return {

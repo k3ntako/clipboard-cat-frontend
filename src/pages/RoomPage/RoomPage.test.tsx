@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { RoomPage, RoomPageProps } from "./RoomPage";
-import { generateMockTextRequests } from "../../testHelpers/mockTextRequests";
+import { generateMockTextRequests } from "../../fixtures/mockTextRequests.fixture";
 import { TextEntry } from "../../utilities/textRequests";
 
 const setup = (params: Partial<RoomPageProps> = {}) => {

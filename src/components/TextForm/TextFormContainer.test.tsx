@@ -1,6 +1,6 @@
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import { TextFormContainer } from "./TextFormContainer";
-import { generateMockTextRequests } from "../../testHelpers/mockTextRequests";
+import { generateMockTextRequests } from "../../fixtures/mockTextRequests.fixture";
 
 const setup = () => {
   const mockTextRequests = generateMockTextRequests();
