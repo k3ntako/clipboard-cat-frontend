@@ -15,20 +15,20 @@ export interface ToastProps {
 export const Toast = ({ message, type, timeInMs }: ToastProps) => {
   const [isDisplayed, setIsDisplayed] = useState<boolean>(false);
 
-  const startTimer = () => {
-    setTimeout(() => {
-      setIsDisplayed(false);
-    }, timeInMs || 5000);
-  };
-
   useEffect(() => {
+    const startTimer = () => {
+      setTimeout(() => {
+        setIsDisplayed(false);
+      }, timeInMs || 5000);
+    };
+
     const nowDisplayed = !!message;
     setIsDisplayed(nowDisplayed);
 
     if (nowDisplayed) {
       startTimer();
     }
-  }, [message, startTimer]);
+  }, [message, timeInMs]);
 
   if (!isDisplayed) {
     return null;
