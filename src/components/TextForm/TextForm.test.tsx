@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { TextForm, TextFormProps } from "./TextForm";
 
 const setup = (props: Partial<TextFormProps> = {}) => {
@@ -36,7 +36,7 @@ test("should display user input", () => {
   expect(input.value).toBe("this is a test string!");
 });
 
-test("should submit user input", () => {
+test("should submit user input", async () => {
   const {
     renderUtils: { getByRole, getByLabelText },
     mockOnSubmit,
@@ -49,21 +49,27 @@ test("should submit user input", () => {
   fireEvent.click(submitButton);
 
   expect(mockOnSubmit.mock.calls[0][0]).toEqual("CAPITALIZED STRING?");
+
+  await waitFor(() => {
+    expect(input.value).toEqual("");
+  });
 });
 
-test("should clear input field on successful submit", () => {
+test("should clear input field on successful submit", async () => {
   const {
-    renderUtils: { getByRole, getByLabelText, queryByDisplayValue },
+    renderUtils: { getByRole, getByLabelText },
   } = setup();
 
   const input = getByLabelText("Paste text:") as HTMLInputElement;
   fireEvent.change(input, { target: { value: "CAPITALIZED STRING?" } });
+  expect(input.value).toEqual("CAPITALIZED STRING?");
 
   const submitButton = getByRole("button", { name: "Submit" });
   fireEvent.click(submitButton);
 
-  const text = queryByDisplayValue("CAPITALIZED STRING?");
-  expect(text).not.toBeInTheDocument();
+  await waitFor(() => {
+    expect(input.value).toEqual("");
+  });
 });
 
 test("should not clear input field on submit error", () => {

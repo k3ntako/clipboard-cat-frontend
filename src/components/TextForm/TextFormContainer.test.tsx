@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { TextFormContainer } from "./TextFormContainer";
 import { generateMockTextRequests } from "../../testHelpers/mockTextRequests";
 
@@ -14,7 +14,7 @@ const setup = () => {
   };
 };
 
-test("should make request to upload text", () => {
+test("should make request to upload text", async () => {
   const {
     renderUtils: { getByLabelText, getByRole },
     mockTextRequests,
@@ -27,4 +27,8 @@ test("should make request to upload text", () => {
   fireEvent.click(submitButton);
 
   expect(mockTextRequests.uploadText).toHaveBeenCalledTimes(1);
+
+  await waitFor(() => {
+    expect(input.value).toEqual("");
+  });
 });
