@@ -30,7 +30,7 @@ export const RoomPage = ({
     };
 
     getLastTenTexts();
-  }, [textRequests, displayToast]);
+  }, []);
 
   return (
     <>

@@ -2,7 +2,7 @@ import { apiFetcher } from "./apiFetcher";
 
 export interface TextEntry {
   id: string;
-  text_string: string;
+  content: string;
   created_at: string;
   updated_at: string;
 }
@@ -23,7 +23,7 @@ export const uploadText = (textString: string): Promise<TextEntry> => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      text_string: textString,
+      content: textString,
     }),
   });
 };
