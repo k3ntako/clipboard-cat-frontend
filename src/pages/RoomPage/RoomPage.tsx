@@ -24,19 +24,26 @@ export const RoomPage = ({
         const texts = await textRequests.getTexts();
         setTexts(texts);
       } catch (error) {
-        setError(error);
-        displayToast(ToastType.Error, error.message);
+        setError(error as Error);
+        displayToast(ToastType.Error, (error as Error).message);
       }
     };
 
     getLastTenTexts();
   }, []);
 
+  const onUploadSuccess = (text: TextEntry) => {
+    setTexts([text, ...texts]);
+  };
+
   return (
     <>
       <NavBar />
       <div className="page roomPage">
-        <TextFormContainer textRequests={textRequests} />
+        <TextFormContainer
+          textRequests={textRequests}
+          onSuccess={onUploadSuccess}
+        />
         <h2>Texts</h2>
         {error ? (
           <div className="error">There was an error retrieving the texts</div>

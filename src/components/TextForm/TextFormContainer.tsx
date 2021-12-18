@@ -1,14 +1,19 @@
 import { TextForm } from "./TextForm";
-import { TextRequests } from "../../utilities/textRequests";
+import { TextEntry, TextRequests } from "../../utilities/textRequests";
 import "./TextForm.css";
 
 interface TextFormContainerProps {
   textRequests: TextRequests;
+  onSuccess: (text: TextEntry) => void;
 }
 
-export const TextFormContainer = ({ textRequests }: TextFormContainerProps) => {
+export const TextFormContainer = ({
+  textRequests,
+  onSuccess,
+}: TextFormContainerProps) => {
   const onSubmit = async (textString: string): Promise<void> => {
-    await textRequests.uploadText(textString);
+    const response = await textRequests.uploadText(textString);
+    onSuccess(response);
   };
 
   return (
