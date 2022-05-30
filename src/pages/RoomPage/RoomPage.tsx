@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { NavBar } from "../../components/NavBar";
+import { TextFormContainer } from "../../components/TextForm/TextFormContainer";
 import { TextList } from "../../components/TextList";
-import { TextEntry } from "../../utilities/textRequests";
+import { ToastType } from "../../components/Toast";
+import { TextEntry, TextRequests } from "../../utilities/textRequests";
 import "./RoomPage.css";
 
-interface RoomPageProps {
-  textRequests: {
-    getTexts: () => Promise<TextEntry[]>;
-  };
+export interface RoomPageProps {
+  textRequests: TextRequests;
+  displayToast: (type: ToastType, message: string) => void;
 }
 
-export const RoomPage = ({ textRequests }: RoomPageProps): JSX.Element => {
+export const RoomPage = ({
+  textRequests,
+  displayToast,
+}: RoomPageProps): JSX.Element => {
   const [texts, setTexts] = useState<TextEntry[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
@@ -20,17 +24,26 @@ export const RoomPage = ({ textRequests }: RoomPageProps): JSX.Element => {
         const texts = await textRequests.getTexts();
         setTexts(texts);
       } catch (error) {
-        setError(error);
+        setError(error as Error);
+        displayToast(ToastType.Error, (error as Error).message);
       }
     };
 
     getLastTenTexts();
-  }, [textRequests]);
+  }, []);
+
+  const onUploadSuccess = (text: TextEntry) => {
+    setTexts([text, ...texts]);
+  };
 
   return (
     <>
       <NavBar />
       <div className="page roomPage">
+        <TextFormContainer
+          textRequests={textRequests}
+          onSuccess={onUploadSuccess}
+        />
         <h2>Texts</h2>
         {error ? (
           <div className="error">There was an error retrieving the texts</div>

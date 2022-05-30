@@ -5,7 +5,9 @@
   font-weight: 700;
   margin: 0.5rem auto;
   max-width: 500px;
+  overflow-wrap: break-word;
   padding: 1rem 1.5rem;
+  white-space: pre-line; /* displays \n */
 }
 
 .noTexts {

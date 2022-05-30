@@ -13,7 +13,7 @@ export const TextList = ({ texts }: TextListProps) => {
   return (
     <div className="textList">
       {texts.map((t) => (
-        <div key={t.id}> {t.text_string}</div>
+        <div key={t.id}> {t.content}</div>
       ))}
     </div>
   );

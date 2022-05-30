@@ -1,0 +1,37 @@
+.textForm {
+  margin: auto;
+}
+
+.textForm > form {
+  margin: auto;
+  max-width: 500px;
+  width: 100%;
+}
+
+.textForm > form label {
+  display: none;
+}
+
+.textForm .textStringTextArea {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.textForm .textStringTextArea textarea {
+  font-size: 1rem;
+  height: 200px;
+  min-height: 30px;
+  resize: vertical;
+  width: 100%;
+}
+
+.textLengthIndicator {
+  bottom: 0.5rem;
+  font-size: 0.9rem;
+  position: absolute;
+  right: 0.5rem;
+}
+
+.textLengthIndicator:not(.error) {
+  color: #bbbbbb;
+}
